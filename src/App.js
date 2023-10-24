@@ -1,19 +1,10 @@
-//import logo from './logo.svg';
+
 import './App.css';
-function Title(props){
-  var name="into the unknown"
-  var number=parseInt(props.number)
-  console.log(typeof(number))
-  return(
-    <div>
-      {name} {number}
-    </div>
-  )
-}
+import Nav from './components/nav';
 function App() {
   return (
     <div>
-      <Title number="3" ></Title>
+      <Nav></Nav>
     </div>
   );
 }
