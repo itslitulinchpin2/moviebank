@@ -93,6 +93,7 @@ const Banner = () => {
   }
 }
 
+// styled components
 
 const Iframe = styled.iframe`
   width: 100%;
