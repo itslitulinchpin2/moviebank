@@ -4,6 +4,7 @@ import Nav from './components/nav';
 import Banner from './components/banner';
 import Row from './components/row';
 import requests from './api/request';
+import Footer from './components/footer';
 function App() {
   return (
     <div>
@@ -27,7 +28,9 @@ function App() {
       title="Comedy Movies"
       id="CM"
       fetchURL={requests.fetchComedyMovies}/>
-      
+
+      <Footer></Footer>
+
     </div>
   );
 }
