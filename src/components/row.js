@@ -1,77 +1,40 @@
-import React from 'react'
-import {useState,useEffect} from'react'
-import axios from '../api/axios'
-import './row.css'
-import MovieModal from './MoviesModal'
+import React, { useEffect, useState } from "react";
+import axios from "../api/axios";
+import MovieModal from "./MoviesModal";
+import "./row.css";
 
+// import Swiper core and required modules
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 
-const Row = ({title,id,fetchURL,isLargeRow}) => {
-const [movies,setMovies]=useState([]);
-const [modalOpen, setModalOpen] = useState(false);
-const [movieSelected, setMovieSelected] = useState({});
+import { Swiper, SwiperSlide } from "swiper/react";
 
-useEffect(()=>{
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+
+export default function Row({ isLargeRow, title, id, fetchURL }) {
+  const [movies, setMovies] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [movieSelected, setMovieSelected] = useState({});
+
+  useEffect(() => {
     fetchMovieData();
-},[])
+  }, []);
 
-const  fetchMovieData = async () => {
-    const request = await axios.get(fetchURL)
+  const fetchMovieData = async () => {
+    const request = await axios.get(fetchURL);
+    console.log("받아온 결과", request);
     setMovies(request.data.results);
-}
+  };
 
-const handleClick = (movie) => {
+  const handleClick = (movie) => {
     setModalOpen(true);
     setMovieSelected(movie);
   };
 
   return (
-
-
-
-    <section className="row">
-<h2>{title}</h2>
-<div className="slider">
-  <div className="slider__arrow-left">
-    <span
-      className="arrow"
-      onClick={() => {
-        document.getElementById(id).scrollLeft -= window.innerWidth - 80;
-      }}
-    >
-      {"<"}
-    </span>
-  </div>
-  <div id={id} className="row__posters">
-    {movies.map((movie) => (
-      <img
-        key={movie.id}
-        className={`row__poster ${isLargeRow && "row__posterLarge"}`}
-        src={`https://image.tmdb.org/t/p/original/${
-          isLargeRow ? movie.poster_path : movie.backdrop_path
-        } `}
-        alt={movie.name}
-        onClick={() => handleClick(movie)}
-      />
-    ))}
-  </div>
-  <div className="slider__arrow-right">
-    <span
-      className="arrow"
-      onClick={() => {
-        //보이는 화면 가로가 window.innerWidth이므로 그것보다 조금 작게 이동시킴
-        document.getElementById(id).scrollLeft += window.innerWidth - 80;
-      }}
-    >
-      {">"}
-    </span>
-  </div>
-</div>
-
-{modalOpen && (
-  <MovieModal {...movieSelected} setModalOpen={setModalOpen} />
-)}
-</section> 
-    /*
     <section className="row">
       <h2>{title}</h2>
       <Swiper 
@@ -100,7 +63,7 @@ const handleClick = (movie) => {
         pagination={{ clickable: true }} // 페이지 버튼 보이게 할지 
       >
         <div id={id} className="row__posters">
-          {movies.map((movie) => (
+          {movies&&movies.map((movie) => (
             <SwiperSlide>
               <img
                 key={movie.id}
@@ -116,16 +79,58 @@ const handleClick = (movie) => {
           ))}
         </div>
       </Swiper>
-    
-    //modalOpen이 true일때만 modal 보여주기 
+
       {modalOpen && (
         <MovieModal {...movieSelected} setModalOpen={setModalOpen} />
       )}
     </section>
-    */
+/* <section className="row">
+<h2>{title}</h2>
+<div className="slider">
+  <div className="slider__arrow-left">
+    <span
+      className="arrow"
+      onClick={() => {
+        document.getElementById(id).scrollLeft -= window.innerWidth - 80;
+      }}
+    >
+      {"<"}
+    </span>
+  </div>
+  <div id={id} className="row__posters">
+    {movies&&movies.map((movie) => (
+      <img
+        key={movie.id}
+        className={`row__poster ${isLargeRow && "row__posterLarge"}`}
+        src={`https://image.tmdb.org/t/p/original/${
+          isLargeRow ? movie.poster_path : movie.backdrop_path
+        } `}
+        alt={movie.name}
+        onClick={() => handleClick(movie)}
+      />
+    ))}
+  </div>
+  <div className="slider__arrow-right">
+    <span
+      className="arrow"
+      onClick={() => {
+        document.getElementById(id).scrollLeft += window.innerWidth - 80;
+      }}
+    >
+      {">"}
+    </span>
+  </div>
+</div>
+
+{modalOpen && (
+  <MovieModal {...movieSelected} setModalOpen={setModalOpen} />
+)}
+</section>  */
+
+
   );
 }
 
 // eslint-disable-next-line no-lone-blocks
 
-export default Row
+
